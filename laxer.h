@@ -7,6 +7,7 @@
 
 #include <string>
 #include <vector>
+#include <list>
 using namespace std;
 class laxer {
 public:
@@ -14,6 +15,6 @@ public:
     string getWord(string s, bool flag);
 
 };
-
+list<string>* split(string str, string token);
 
 #endif //AIRPLANEPROJECT_LAXER_H

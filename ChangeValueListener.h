@@ -10,5 +10,7 @@ using namespace std;
 class ChangeValueListener {
 public:
     virtual void update(string var, float newVal) = 0;
+    virtual void update(int index, float newVal) = 0;
+
 };
 #endif //AIRPLANEPROJECT_CHANGEVALUELISTENER_H

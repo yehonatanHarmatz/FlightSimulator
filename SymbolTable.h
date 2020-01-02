@@ -23,6 +23,8 @@ public:
     string getSim(string var);
     string getVarByIndex(int index);
     void update(string var, float newVal);
+    void update(int index, float newVal);
+
     void addProgramVar(string var, VarData* data) {
         this->ProgramVars.insert(pair<string,VarData*>(var, data));
     }
@@ -31,6 +33,7 @@ public:
     }
     void initialize();
     VarData* searchSim(string sim);
+
 };
 
 

@@ -10,6 +10,7 @@
 
 using namespace std;
 class Observer {
+protected:
     list<ChangeValueListener*> listeners;
 public:
     Observer() {
@@ -18,6 +19,11 @@ public:
     virtual void notify(string var, float newVal) {
         for (ChangeValueListener* l : listeners) {
             l->update(var, newVal);
+        }
+    }
+    virtual void notify(int index, float newVal) {
+        for (ChangeValueListener* l : listeners) {
+            l->update(index, newVal);
         }
     }
     virtual void addListener(ChangeValueListener* l) {

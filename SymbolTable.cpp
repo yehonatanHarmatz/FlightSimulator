@@ -62,7 +62,14 @@ void SymbolTable::update(string var, float newVal) {
         this->ChangeValByProgram(var, newVal);
     }
 }
-
+void SymbolTable::update(int index, float newVal) {
+    string var = getVarByIndex(index);
+    if (this->SimulatorVars.find(var) != this->SimulatorVars.end()) {
+        this->ChangeValBySimulator(var, newVal);
+    } else {
+        this->ChangeValByProgram(var, newVal);
+    }
+}
 void SymbolTable::initialize() {
     this->indexToVar = {"airspeed-indicator_indicated-speed-kt","time_warp", "switches_magnetos", "heading-indicator_offset-deg",
                              "altimeter_indicated-altitude-ft", "altimeter_pressure-alt-ft", "attitude-indicator_indicated-pitch-deg",
@@ -78,12 +85,12 @@ void SymbolTable::initialize() {
 
 VarData *SymbolTable::searchSim(string sim) {
     for (auto pair1 : this->SimulatorVars) {
-        if (pair1.second->getSim() == sim) {
+        if (pair1.second->getSim() == sim && sim != "") {
             return pair1.second;
         }
     }
     for (auto pair1 : this->ProgramVars) {
-        if (pair1.second->getSim() == sim) {
+        if (pair1.second->getSim() == sim && sim != "") {
             return pair1.second;
         }
     }
