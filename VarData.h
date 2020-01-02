@@ -24,7 +24,7 @@ public:
         this->SimulatorName = SimulatorName;
     }
     void changeVal(float newVal) {
-        this->Value = Value;
+        this->Value = newVal;
     }
     bool getDirection() {
         return direction;
