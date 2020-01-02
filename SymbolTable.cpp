@@ -75,3 +75,17 @@ void SymbolTable::initialize() {
                              "current-engine_mixture", "switches_master-bat", "switches_master-alt", "engine_rpm"};
 
 }
+
+VarData *SymbolTable::searchSim(string sim) {
+    for (auto pair1 : this->SimulatorVars) {
+        if (pair1.second->getSim() == sim) {
+            return pair1.second;
+        }
+    }
+    for (auto pair1 : this->ProgramVars) {
+        if (pair1.second->getSim() == sim) {
+            return pair1.second;
+        }
+    }
+    return nullptr;
+}

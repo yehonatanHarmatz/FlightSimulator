@@ -11,17 +11,17 @@ using namespace std;
 class VarData {
     float Value;
     string sim;
-    string ProgramName;
-    string SimulatorName;
-    //false for "->", true for "<-"
+    //string ProgramName;
+    //string SimulatorName;
+    ///false for "->", true for "<-"
     bool direction;
 public:
-    VarData(float val, string sim, bool dir, string ProgName, string SimulatorName) {
+    VarData(float val, string sim, bool dir) {
         this->Value = val;
         this->sim = sim;
         this->direction = dir;
-        this->ProgramName = ProgName;
-        this->SimulatorName = SimulatorName;
+        //this->ProgramName = ProgName;
+        //this->SimulatorName = SimulatorName;
     }
     void changeVal(float newVal) {
         this->Value = newVal;

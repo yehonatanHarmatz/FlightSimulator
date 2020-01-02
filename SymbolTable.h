@@ -30,6 +30,7 @@ public:
         this->SimulatorVars.insert(pair<string,VarData*>(var, data));
     }
     void initialize();
+    VarData* searchSim(string sim);
 };
 
 
