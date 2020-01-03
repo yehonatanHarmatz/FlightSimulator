@@ -30,7 +30,7 @@ void openDataServer::openServer(int port) {
     if (client_socket == -1) {
         throw "cant accept the simulator as client";
     }
-    //size of 36 float values with ',' and \n for reading each values massage separately
+    //size of 36 float values with ',' and \n for reading each values message separately
     const int size = 36* sizeof(float) + 36 * sizeof(char);
     char buffer[size] = {0};
     list<string>* data;
