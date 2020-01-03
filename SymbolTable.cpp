@@ -11,6 +11,7 @@ void SymbolTable::ChangeValBySimulator(string var, float val) {
     //check direction
     write.lock();
     if (!this->SimulatorVars.at(var)->getDirection()) {
+        write.unlock();
         return;
     }
     write.unlock();
