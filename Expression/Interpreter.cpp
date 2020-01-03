@@ -43,7 +43,7 @@ Expression *Interpreter::interpret(string exp) {
                     }
                     leastOp = operators.top();
                 }
-                if (leastOp == '(' || !isSmaller(leastOp, exp[i])) {
+                if (leastOp == '(' || isSmaller(leastOp, exp[i])) {
                     break;
                 } else {
                     string s = "";
