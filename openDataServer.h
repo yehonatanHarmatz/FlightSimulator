@@ -9,16 +9,14 @@
 #include <vector>
 #include <mutex>
 #include "Observer.h"
+#include "command.h"
 
 using namespace std;
-class openDataServer: Observer {
-    vector<string> params;
+class openDataServer: Observer, command {
     bool keep_running = true;
     mutex mtx;
 public:
-    openDataServer(vector<string> params) {
-        this->params = params;
-    }
+    openDataServer(vector<string>* params) : command(params) {}
 
     void openServer(int port);
 
@@ -29,6 +27,9 @@ public:
         mtx.unlock();
     }
 
+    void serverRound(int client_socket);
+
+    void serverLoop(int client_socket);
 };
 
 

@@ -2,8 +2,8 @@
 // Created by oren on 13/12/2019.
 //
 
-#ifndef EX3_COMMAND_H
-#define EX3_COMMAND_H
+#ifndef AIRPLANEPROJECT_COMMAND_H
+#define AIRPLANEPROJECT_COMMAND_H
 
 #include "laxer.h"
 using namespace std;
@@ -18,6 +18,12 @@ private:
 public:
     command(vector<string> *ptr) : lexer_vector_ptr(ptr){};
     virtual int execute(int index) = 0;
+    virtual ~command() {
+        delete lexer_vector_ptr;
+    }
+    string getStringInVector(int i) {
+        return lexer_vector_ptr->at(i);
+    }
 };
 
-#endif //EX3_COMMAND_H
+#endif //AIRPLANEPROJECT_COMMAND_H
