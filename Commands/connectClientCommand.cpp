@@ -6,11 +6,12 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <thread>
+#include <unistd.h>
 #include "connectClientCommand.h"
 #include "../Expression/Interpreter.h"
 
 void connectClientCommand::update(string var, float newVal) {
-    string message = "set " + this->st->getSim(var) + " " + to_string(newVal);
+    string message = "set " + this->st->getSim(var) + " " + to_string(newVal) + "\r\n";
     mesMtx.lock();
     this->messages.push(message);
     mesMtx.unlock();
@@ -28,6 +29,7 @@ void connectClientCommand::sendMessageLoop(int client_socket) {
         mesMtx.unlock();
         mtx.lock();
     }
+    close(client_socket);
 }
 
 int connectClientCommand::execute(int index) {

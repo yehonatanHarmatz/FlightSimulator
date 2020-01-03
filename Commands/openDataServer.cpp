@@ -12,7 +12,7 @@
 
 void openDataServer::serverRound(int client_socket) {
     //size of 36 float values with ',' and \n for reading each values message separately
-    const int size = 36* sizeof(float) + 36 * sizeof(char);
+    const int size = 36* sizeof(float) + 37 * sizeof(char);
     char buffer[size] = {0};
     list<string>* data;
     string s = "";

@@ -81,7 +81,7 @@ void SymbolTable::initialize() {
                              "switches_starter", "active-engine_auto-start", "flight_speedbrake", "c172p_brake-parking", "engine_primer",
                              "current-engine_mixture", "switches_master-bat", "switches_master-alt", "engine_rpm"};
 
-    string sims[36] = { "/instrumentation/airspeed-indicator/indicated-speed-kt", "/sim/time/warp", "/controls/switches/magnetos", "/instrumentation/heading-indicator/offset-deg",
+    this->sims = { "/instrumentation/airspeed-indicator/indicated-speed-kt", "/sim/time/warp", "/controls/switches/magnetos", "/instrumentation/heading-indicator/offset-deg",
                         "/instrumentation/altimeter/indicated-altitude-ft", "/instrumentation/altimeter/pressure-alt-ft", "/instrumentation/attitude-indicator/indicated-pitch-deg",
                         "/instrumentation/attitude-indicator/indicated-roll-deg", "/instrumentation/attitude-indicator/internal-pitch-deg",
                         "/instrumentation/attitude-indicator/internal-roll-deg", "/instrumentation/encoder/indicated-altitude-ft", "/instrumentation/encoder/pressure-alt-ft",
@@ -93,7 +93,7 @@ void SymbolTable::initialize() {
                         "/sim/model/c172p/brake-parking", "/controls/engines/engine/primer", "/controls/engines/current-engine/mixture",
                         "/controls/switches/master-bat", "/controls/switches/master-alt", "/engines/engine/rpm"};
     for (int i = 0; i < 35; ++i) {
-        VarData* vd = new VarData(0, sims[i], false);
+        VarData* vd = new VarData(0, sims[i], true);
         this->addSimulatorVar(this->getVarByIndex(i), vd);
     }
 
@@ -111,14 +111,18 @@ void SymbolTable::changeDirection(string var, bool newDirection) {
 }
 VarData *SymbolTable::searchSim(string sim) {
     for (auto pair1 : this->SimulatorVars) {
-        if (pair1.second->getSim() == sim && sim != "") {
+        write.lock();
+        if (pair1.second->getSim() == sim && sim != "" && pair1.second->getDirection()) {
             return pair1.second;
         }
+        write.unlock();
     }
     for (auto pair1 : this->ProgramVars) {
-        if (pair1.second->getSim() == sim && sim != "") {
+        write.lock();
+        if (pair1.second->getSim() == sim && sim != "" && pair1.second->getDirection()) {
             return pair1.second;
         }
+        write.unlock();
     }
     return nullptr;
 }

@@ -13,6 +13,7 @@ class SymbolTable: public Observer, public ChangeValueListener {
     map<string,VarData*> ProgramVars = map<string,VarData*>();
     map<string,VarData*> SimulatorVars = map<string,VarData*>();
     array<string, 36> indexToVar;
+    array<string, 36> sims;
     void ChangeValBySimulator(string var, float val);
     void ChangeValByProgram(string var, float val);
 public:
