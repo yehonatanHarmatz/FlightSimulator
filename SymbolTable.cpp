@@ -9,9 +9,11 @@ mutex write;
 mutex read;
 void SymbolTable::ChangeValBySimulator(string var, float val) {
     //check direction
+    write.lock();
     if (!this->SimulatorVars.at(var)->getDirection()) {
         return;
     }
+    write.unlock();
     write.lock();
     read.lock();
     this->SimulatorVars.at(var)->changeVal(val);
@@ -92,7 +94,7 @@ void SymbolTable::initialize() {
                         "/controls/switches/master-avionics", "/controls/switches/starter", "/engines/active-engine/auto-start", "/controls/flight/speedbrake",
                         "/sim/model/c172p/brake-parking", "/controls/engines/engine/primer", "/controls/engines/current-engine/mixture",
                         "/controls/switches/master-bat", "/controls/switches/master-alt", "/engines/engine/rpm"};
-    for (int i = 0; i < 35; ++i) {
+    for (int i = 0; i < 36; ++i) {
         VarData* vd = new VarData(0, sims[i], true);
         this->addSimulatorVar(this->getVarByIndex(i), vd);
     }
@@ -113,6 +115,7 @@ VarData *SymbolTable::searchSim(string sim) {
     for (auto pair1 : this->SimulatorVars) {
         write.lock();
         if (pair1.second->getSim() == sim && sim != "" && pair1.second->getDirection()) {
+            write.unlock();
             return pair1.second;
         }
         write.unlock();
@@ -120,6 +123,7 @@ VarData *SymbolTable::searchSim(string sim) {
     for (auto pair1 : this->ProgramVars) {
         write.lock();
         if (pair1.second->getSim() == sim && sim != "" && pair1.second->getDirection()) {
+            write.unlock();
             return pair1.second;
         }
         write.unlock();
