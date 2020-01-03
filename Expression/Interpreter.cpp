@@ -11,12 +11,14 @@
 
 using namespace std;
 
-Interpreter::Interpreter() {
+Interpreter::Interpreter(SymbolTable* st) {
     this->vars = new map<string, double>();
+    this->st = st;
 }
 
 Interpreter::~Interpreter() {
     delete this->vars;
+    delete this->st;
 }
 
 Expression *Interpreter::interpret(string exp) {
@@ -89,11 +91,11 @@ Expression *Interpreter::interpret(string exp) {
             if (isVal(varOrVal)) {
                 postfix.push(varOrVal);
             } else if (isVar(varOrVal)) {
-                if ((*this->vars).find(varOrVal) != (*this->vars).end()) {
+                //if ((*this->vars).find(varOrVal) != (*this->vars).end()) {
                     postfix.push((varOrVal));
-                } else {
-                    throw "bad input";
-                }
+                //} else {
+                //    throw "bad input";
+                //}
             } else {
                 throw "bad input";
             }
@@ -116,7 +118,7 @@ Expression *Interpreter::interpret(string exp) {
         if (isVal(s)) {
             vals.push(new Value(stod(s)));
         } else if (isVar(s)) {
-            vals.push(new Variable(s, this->vars->find(s)->second));
+            vals.push(new Variable(s, this->st->getValue(s), st));
         } else if (un.find(s) != string::npos) {
             if (s == "@") {
                 if (vals.empty()) {

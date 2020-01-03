@@ -10,11 +10,13 @@
 #include <list>
 #include <map>
 #include "Expression.h"
+#include "../SymbolTable.h"
 
 class Interpreter {
     map<string, double> *vars;
+    SymbolTable* st;
 public:
-    Interpreter();
+    Interpreter(SymbolTable* st);
 
     virtual ~Interpreter();
 

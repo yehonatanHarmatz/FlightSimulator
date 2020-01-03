@@ -7,14 +7,16 @@
 
 #include <string>
 #include "Expression.h"
+#include "../SymbolTable.h"
 
 using namespace std;
 
 class Variable : public Expression {
     string name;
     double value;
+    SymbolTable* st;
 public:
-    Variable(string name, double value);
+    Variable(string name, double value, SymbolTable* st);
 
     virtual ~Variable();
 
