@@ -26,6 +26,9 @@ public:
     void changeVal(float newVal) {
         this->Value = newVal;
     }
+    void changeDirection(bool newDir) {
+        this->direction = newDir;
+    }
     bool getDirection() {
         return direction;
     }

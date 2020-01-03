@@ -34,6 +34,7 @@ public:
     void initialize();
     VarData* searchSim(string sim);
 
+    void changeDirection(string var, bool newDirection);
 };
 
 
