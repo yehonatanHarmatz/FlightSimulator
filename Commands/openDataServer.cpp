@@ -5,7 +5,6 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <unistd.h>
-#include <cstring>
 #include "openDataServer.h"
 #include "../laxer.h"
 #include "../Expression/Interpreter.h"
