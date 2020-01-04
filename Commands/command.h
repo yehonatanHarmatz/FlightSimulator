@@ -26,7 +26,7 @@ public:
     string getStringInVector(int i) {
         return lexer_vector_ptr->at(i);
     }
-    int getParams() {
+    virtual int getParams(int i) {
         return this->params;
     }
 };

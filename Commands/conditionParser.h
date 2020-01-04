@@ -22,6 +22,7 @@ public:
     conditionParser(vector<string>* lexer_params, SymbolTable* st, Parser* p): command(lexer_params) {
         this->st = st;
         this->p = p;
+        this->params = 0;
     }
     void getCommands(int index) {
         int a = index - 1; //on while/if word
@@ -36,7 +37,7 @@ public:
             command * c = p->getCommand(index);
             if (c!= nullptr) {
                 this->commands.push_back(c);
-                index += c->getParams();
+                index += c->getParams(index);
             }
         }
         //now the index on }
@@ -66,7 +67,12 @@ public:
     void runCommands(int index) {
         for (auto c : this->commands) {
                 c->execute(index);
-                index += c->getParams();
+                index += c->getParams(index + 1);
+        }
+    }
+    int getParams(int i) {
+        if (this->params == 0) {
+            this->getCommands(i);
         }
     }
 };
