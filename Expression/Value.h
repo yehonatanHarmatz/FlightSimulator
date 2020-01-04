@@ -7,7 +7,9 @@
 
 
 #include "Expression.h"
-
+/**
+ * class of value
+ */
 class Value : public Expression {
     double val;
 

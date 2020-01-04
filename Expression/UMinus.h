@@ -7,7 +7,9 @@
 
 
 #include "UnaryOperator.h"
-
+/**
+ * unary minus class
+ */
 class UMinus : public UnaryOperator {
 public:
 

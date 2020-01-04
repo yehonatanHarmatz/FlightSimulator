@@ -10,7 +10,9 @@
 #include "../SymbolTable.h"
 
 using namespace std;
-
+/**
+ * class of variable
+ */
 class Variable : public Expression {
     string name;
     double value;

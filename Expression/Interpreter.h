@@ -11,7 +11,9 @@
 #include <map>
 #include "Expression.h"
 #include "../SymbolTable.h"
-
+/**
+ * take string of expression and create expression object
+ */
 class Interpreter {
     map<string, double> *vars;
     SymbolTable* st;

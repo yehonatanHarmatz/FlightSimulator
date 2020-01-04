@@ -7,7 +7,9 @@
 
 
 #include "UnaryOperator.h"
-
+/**
+ * Unary plus class
+ */
 class UPlus : public UnaryOperator {
 public:
     UPlus(Expression *exp) : UnaryOperator(exp) {

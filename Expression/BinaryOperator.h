@@ -7,7 +7,9 @@
 
 
 #include "Expression.h"
-
+/**
+ * binary operator class
+ */
 class BinaryOperator : public Expression {
 protected:
     Expression* left;

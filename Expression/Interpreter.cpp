@@ -19,7 +19,11 @@ Interpreter::Interpreter(SymbolTable* st) {
 Interpreter::~Interpreter() {
     delete this->vars;
 }
-
+/**
+ * interpret infix string expression to expression object
+ * @param exp
+ * @return
+ */
 Expression *Interpreter::interpret(string exp) {
     queue<string> postfix;
     stack<char> operators;
@@ -30,6 +34,7 @@ Expression *Interpreter::interpret(string exp) {
     for (int i = 0; i < exp.length(); i++) {
         if (op.find(exp[i]) != std::string::npos) {
             while (!operators.empty() && operators.top() != '(') {
+                ///get the least operator to compare with
                 char leastOp = operators.top();
                 while (moreOp.find(leastOp) == std::string::npos) {
                     string s = "";
@@ -42,10 +47,12 @@ Expression *Interpreter::interpret(string exp) {
                     }
                     leastOp = operators.top();
                 }
+                ///compare the current operator to the least operator
                 if (leastOp == '(' || isSmaller(leastOp, exp[i])) {
                     break;
                 } else {
                     string s = "";
+                    ///check if binary operator or unary
                     if (uop.find(operators.top()) == std::string::npos || hasValBefore) {
                         s += operators.top();
                     } else if (operators.top() == '-') {
@@ -70,6 +77,9 @@ Expression *Interpreter::interpret(string exp) {
             operators.push('(');
             hasValBefore = false;
         } else if (exp[i] == ')') {
+            /**
+             * in case of ) we move all the operators till ( to the postfix queue
+             */
             while (!operators.empty() && operators.top() != '(') {
                 string s = "";
                 s += operators.top();
@@ -82,6 +92,7 @@ Expression *Interpreter::interpret(string exp) {
             operators.pop();
             hasValBefore = true;
         } else {
+            ///check if the current token is value or variable
             string varOrVal = "";
             while (moreOp.find(exp[i]) == std::string::npos && i < exp.length()) {
                 varOrVal += exp[i];
@@ -109,16 +120,20 @@ Expression *Interpreter::interpret(string exp) {
         postfix.push(s);
         operators.pop();
     }
+    /**
+     * make expression from postfix
+     */
     stack<Expression *> vals;
     string un = "@$";
     while (!postfix.empty()) {
         string s = postfix.front();
         postfix.pop();
+        ///if value
         if (isVal(s)) {
             vals.push(new Value(stod(s)));
-        } else if (isVar(s)) {
+        } else if (isVar(s)) { ///if variable
             vals.push(new Variable(s, this->st->getValue(s), st));
-        } else if (un.find(s) != string::npos) {
+        } else if (un.find(s) != string::npos) { ///if unary operator
             if (s == "@") {
                 if (vals.empty()) {
                     throw "bad input";
@@ -145,6 +160,7 @@ Expression *Interpreter::interpret(string exp) {
             }
             Expression *left = vals.top();
             vals.pop();
+            ///its binary operator
             switch (s[0]) {
                 case '+':
                     vals.push(new Plus(left, right));
@@ -164,13 +180,14 @@ Expression *Interpreter::interpret(string exp) {
         }
 
     }
-
-    return vals.
-
-            top();
+    ///the expression is in the top of the stack
+    return vals.top();
 
 }
-
+/**
+ * set variables for the interpreter
+ * @param vars
+ */
 void Interpreter::setVariables(string vars) {
     list<string> *newVars = split(vars, ";");
 
@@ -197,7 +214,11 @@ void Interpreter::setVariables(string vars) {
     delete newVars;
 
 }
-
+/**
+ * check if number
+ * @param val
+ * @return
+ */
 bool Interpreter::isVal(string val) {
     bool hasDote = false;
     for (int i = 0; i < val.length(); i++) {
@@ -212,7 +233,11 @@ bool Interpreter::isVal(string val) {
     }
     return true;
 }
-
+/**
+ * check if variabe
+ * @param var
+ * @return
+ */
 bool Interpreter::isVar(string var) {
     if ((var[0] >= '0' && var[0] <= '9')) {
         return false;
@@ -225,7 +250,12 @@ bool Interpreter::isVar(string var) {
     }
     return true;
 }
-
+/**
+ * split function
+ * @param str
+ * @param token
+ * @return
+ */
 list<string> *Interpreter::split(string str, string token) {
     if (str[str.length() - 1] != token[0])
         str += token;
@@ -237,7 +267,12 @@ list<string> *Interpreter::split(string str, string token) {
     }
     return list;
 }
-
+/**
+ * compare 2 operators
+ * @param o1
+ * @param i
+ * @return if o2 stronger than o1
+ */
 bool Interpreter::isSmaller(char o1, char &i) {
     switch (o1) {
         case '*':

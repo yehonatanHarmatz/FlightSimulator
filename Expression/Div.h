@@ -7,7 +7,9 @@
 
 
 #include "BinaryOperator.h"
-
+/**
+ * div operator class
+ */
 class Div : public BinaryOperator {
 public:
     Div(Expression *left, Expression *right);

@@ -3,7 +3,10 @@
 //
 
 #include "BinaryOperator.h"
-
+/**
+ * @param left expression
+ * @param right expression
+ */
 BinaryOperator::BinaryOperator(Expression *left, Expression *right) {
     this->left = left;
     this->right = right;
