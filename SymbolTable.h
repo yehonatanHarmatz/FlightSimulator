@@ -36,6 +36,9 @@ public:
     VarData* searchSim(string sim);
 
     void changeDirection(string var, bool newDirection);
+    bool isVar(string s) {
+        return (this->SimulatorVars.find(s) != this->SimulatorVars.end()) || (this->ProgramVars.find(s) != this->ProgramVars.end());
+    }
 };
 
 
