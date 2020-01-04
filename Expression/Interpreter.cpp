@@ -18,7 +18,6 @@ Interpreter::Interpreter(SymbolTable* st) {
 
 Interpreter::~Interpreter() {
     delete this->vars;
-    delete this->st;
 }
 
 Expression *Interpreter::interpret(string exp) {

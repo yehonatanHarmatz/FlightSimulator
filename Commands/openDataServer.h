@@ -35,9 +35,6 @@ public:
 
     void serverLoop(int client_socket);
 
-    ~openDataServer() {
-        delete st;
-    }
 };
 
 

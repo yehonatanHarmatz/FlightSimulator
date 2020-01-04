@@ -11,7 +11,6 @@ Variable::Variable(string name, double value, SymbolTable* st) {
 }
 
 Variable::~Variable() {
-    delete st;
 }
 
 Variable &Variable::operator++() {
