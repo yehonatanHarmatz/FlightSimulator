@@ -9,16 +9,25 @@
 #include "../laxer.h"
 #include "../Expression/Interpreter.h"
 #include <thread>
-
+string left = "";
 void openDataServer::serverRound(int client_socket) {
     //size of 36 float values with ',' and \n for reading each values message separately
     const int size = 36* sizeof(float) + 37 * sizeof(char);
     char buffer[size] = {0};
     list<string>* data;
-    string s = "";
-    read(client_socket, buffer,size);
-    for (int i = 0; i <size - 1; ++i) {
-        s += buffer[i];
+    bool flag = true;
+    string s = left;
+    while (flag) {
+        recv(client_socket, buffer, size, 0);
+        for (int i = 0; i < size; ++i) {
+            if (buffer[i] != '\0' && buffer[i] != '\n' && buffer[i] != '\r' && flag) {
+                s += buffer[i];
+            } else if (buffer[i] != '\n') {
+                flag = false;
+            } else if (!flag) {
+                left += buffer[i];
+            }
+        }
     }
     data = split(s, ",");
     for (int i =0; i < (*data).size(); ++i) {

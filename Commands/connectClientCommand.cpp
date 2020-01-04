@@ -34,7 +34,7 @@ void connectClientCommand::sendMessageLoop(int client_socket) {
 
 int connectClientCommand::execute(int index) {
     Interpreter i1 = Interpreter(st);
-    const string ip = getStringInVector(index);
+    const string ip = getStringInVector(index).substr(1, getStringInVector(index).length()-2);
     int port = i1.interpret(getStringInVector(index + 1))->calculate();
     int client_socket = socket(AF_INET,SOCK_STREAM, 0);
     if (client_socket == -1) {
