@@ -7,6 +7,11 @@
 using namespace std;
 mutex write;
 mutex read;
+/**
+ * change value of var by the simulator
+ * @param var
+ * @param val
+ */
 void SymbolTable::ChangeValBySimulator(string var, float val) {
     //check direction
     write.lock();
@@ -21,6 +26,11 @@ void SymbolTable::ChangeValBySimulator(string var, float val) {
     read.unlock();
     write.unlock();
 }
+/**
+ * change value of var by the program
+ * @param var
+ * @param val
+ */
 void SymbolTable::ChangeValByProgram(string var, float val) {
     write.lock();
     read.lock();
@@ -29,6 +39,11 @@ void SymbolTable::ChangeValByProgram(string var, float val) {
     write.unlock();
     this->notify(var, val);
 }
+/**
+ * get value of variable
+ * @param var
+ * @return the value
+ */
 float SymbolTable::getValue(string var) {
     float val;
     if (this->SimulatorVars.find(var) != this->SimulatorVars.end()) {
@@ -42,6 +57,11 @@ float SymbolTable::getValue(string var) {
     }
     return val;
 }
+/**
+ * get sim of var
+ * @param var
+ * @return the path
+ */
 string SymbolTable::getSim(string var) {
     string sim;
     if (this->SimulatorVars.find(var) != this->SimulatorVars.end()) {
@@ -55,9 +75,19 @@ string SymbolTable::getSim(string var) {
     }
     return sim;
 }
+/**
+ * var from the xml by index
+ * @param index
+ * @return
+ */
 string SymbolTable::getVarByIndex(int index) {
     return this->indexToVar[index];
 }
+/**
+ * update, var value
+ * @param var
+ * @param newVal
+ */
 void SymbolTable::update(string var, float newVal) {
     if (this->SimulatorVars.find(var) != this->SimulatorVars.end()) {
         this->ChangeValBySimulator(var, newVal);
@@ -65,6 +95,11 @@ void SymbolTable::update(string var, float newVal) {
         this->ChangeValByProgram(var, newVal);
     }
 }
+/**
+ * change var value
+ * @param index
+ * @param newVal
+ */
 void SymbolTable::update(int index, float newVal) {
     string var = getVarByIndex(index);
     if (this->SimulatorVars.find(var) != this->SimulatorVars.end()) {
@@ -73,6 +108,9 @@ void SymbolTable::update(int index, float newVal) {
         this->ChangeValByProgram(var, newVal);
     }
 }
+/**
+ * init handly the xml 36 vars
+ */
 void SymbolTable::initialize() {
     this->indexToVar = {"airspeed-indicator_indicated-speed-kt","time_warp", "switches_magnetos", "heading-indicator_offset-deg",
                              "altimeter_indicated-altitude-ft", "altimeter_pressure-alt-ft", "attitude-indicator_indicated-pitch-deg",
@@ -101,6 +139,11 @@ void SymbolTable::initialize() {
     }
 
 }
+/**
+ * change direction of var
+ * @param var
+ * @param newDirection
+ */
 void SymbolTable::changeDirection(string var, bool newDirection) {
     if (this->SimulatorVars.find(var) != this->SimulatorVars.end()) {
         write.lock();
@@ -112,6 +155,11 @@ void SymbolTable::changeDirection(string var, bool newDirection) {
         write.unlock();
     }
 }
+/**
+ * search for data object with the same path
+ * @param sim
+ * @return
+ */
 VarData *SymbolTable::searchSim(string sim) {
     for (auto pair1 : this->SimulatorVars) {
         write.lock();

@@ -8,6 +8,9 @@
 #include "SymbolTable.h"
 #include "Commands/command.h"
 using namespace std;
+/**
+ * the parser class
+ */
 class Parser {
     map<string, command*> commands;
     vector<string>* lexer_strings;

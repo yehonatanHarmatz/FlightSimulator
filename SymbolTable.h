@@ -8,7 +8,9 @@
 #include <map>
 #include "VarData.h"
 #include "Observer.h"
-
+/**
+ * the class that organize all the data
+ */
 class SymbolTable: public Observer, public ChangeValueListener {
     map<string,VarData*> ProgramVars = map<string,VarData*>();
     map<string,VarData*> SimulatorVars = map<string,VarData*>();

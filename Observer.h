@@ -9,6 +9,9 @@
 #include <list>
 
 using namespace std;
+/**
+ * observer interface
+ */
 class Observer {
 protected:
     list<ChangeValueListener*> listeners;
@@ -16,11 +19,13 @@ public:
     Observer() {
         listeners = list<ChangeValueListener*>();
     }
+    ///notify with var and val
     virtual void notify(string var, float newVal) {
         for (ChangeValueListener* l : listeners) {
             l->update(var, newVal);
         }
     }
+    ///notify with index and value
     virtual void notify(int index, float newVal) {
         for (ChangeValueListener* l : listeners) {
             l->update(index, newVal);
@@ -32,11 +37,7 @@ public:
     virtual void removeListener(ChangeValueListener* l) {
         listeners.remove(l);
     }
-    virtual ~Observer() {
-        for (ChangeValueListener* l : listeners) {
-            delete l;
-        }
-    }
+
 
 };
 #endif //AIRPLANEPROJECT_OBSERVER_H

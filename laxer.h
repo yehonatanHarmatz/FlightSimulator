@@ -9,6 +9,9 @@
 #include <vector>
 #include <list>
 using namespace std;
+/**
+ * the lexer class
+ */
 class laxer {
 public:
     vector<string> laxe(const char *file_name);

@@ -8,11 +8,12 @@
 #include <string>
 
 using namespace std;
+/**
+ * object of unit of data
+ */
 class VarData {
     float Value;
     string sim;
-    //string ProgramName;
-    //string SimulatorName;
     ///false for "->", true for "<-"
     bool direction;
 public:
@@ -20,8 +21,6 @@ public:
         this->Value = val;
         this->sim = sim;
         this->direction = dir;
-        //this->ProgramName = ProgName;
-        //this->SimulatorName = SimulatorName;
     }
     void changeVal(float newVal) {
         this->Value = newVal;
