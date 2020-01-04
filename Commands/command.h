@@ -15,6 +15,8 @@ using namespace std;
 class command {
 private:
     vector<string> *lexer_vector_ptr;
+protected:
+    int params;
 public:
     command(vector<string> *ptr) : lexer_vector_ptr(ptr){};
     virtual int execute(int index) = 0;
@@ -23,6 +25,9 @@ public:
     }
     string getStringInVector(int i) {
         return lexer_vector_ptr->at(i);
+    }
+    int getParams() {
+        return this->params;
     }
 };
 

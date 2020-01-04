@@ -19,10 +19,11 @@ class connectClientCommand : public command, ChangeValueListener{
     mutex mtx;
     mutex mesMtx;
 public:
-    connectClientCommand(vector<string>* params, SymbolTable* st): command(params) {
+    connectClientCommand(vector<string>* lexer, SymbolTable* st): command(lexer) {
         this->messages = queue<string>();
         this->st = st;
         this->st->addListener(this);
+        this->params = 3;
     }
     int execute(int index);
     void sendMessageLoop(int client_socket);

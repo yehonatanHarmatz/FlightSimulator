@@ -16,6 +16,7 @@ public:
     updateVarCommand(vector<string> *ptr, string name, SymbolTable *st) : command(ptr) {
         this->name = name;
         this->st = st;
+        this->params = 3;
     }
     int execute(int index);
 };

@@ -18,8 +18,9 @@ class openDataServer: public command {
     mutex mtx;
     SymbolTable* st;
 public:
-    openDataServer(vector<string>* params, SymbolTable* st) : command(params) {
+    openDataServer(vector<string>* lexer, SymbolTable* st) : command(lexer) {
         this->st = st;
+        this->params = 2;
     }
 
     void openServer(int port);

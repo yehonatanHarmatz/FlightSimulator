@@ -49,6 +49,6 @@ int connectClientCommand::execute(int index) {
     }
     thread ClientLoop(&connectClientCommand::sendMessageLoop, this, client_socket);
     ClientLoop.detach();
-    return 3;
+    return params;
 }
 

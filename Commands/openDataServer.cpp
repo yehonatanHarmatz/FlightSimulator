@@ -63,5 +63,5 @@ int openDataServer::execute(int index) {
     Interpreter i1 = Interpreter(st);
     int port = i1.interpret(getStringInVector(index))->calculate();
     openServer(port);
-    return 2;
+    return params;
 }

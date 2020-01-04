@@ -6,12 +6,13 @@
 #include "Commands/updateVarCommand.h"
 #include "Commands/connectClientCommand.h"
 #include "Commands/openDataServer.h"
+#include "Commands/ifCommand.h"
+#include "Commands/whileCommand.h"
 
 void Parser::parse() {
     this->initialize();
     int index = 0;
     while (index < (this->lexer_strings->size())) {
-        //lexer returns array of commands
         command * c = this->getCommand(index);
         if (c!= nullptr) {
             index += c->execute(index + 1);
@@ -38,8 +39,12 @@ void Parser::initialize() {
     this->st = new SymbolTable();
     openDataServer* os = new openDataServer(lexer_strings, st);
     connectClientCommand* ccc = new connectClientCommand(lexer_strings, st);
+    ifCommand* ic = new ifCommand(lexer_strings, st, this);
+    whileCommand* wc = new whileCommand(lexer_strings, st, this);
     this->commands = map<string, command*>();
     this->commands["openDataServer"] = os;
     this->commands["connectControlClient"] = ccc;
+    this->commands["while"] = wc;
+    this->commands["if"] = ic;
 
 }
