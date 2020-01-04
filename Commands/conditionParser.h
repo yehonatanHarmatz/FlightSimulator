@@ -67,7 +67,6 @@ public:
         for (auto c : this->commands) {
                 c->execute(index);
                 index += c->getParams();
-            }
         }
     }
 };
