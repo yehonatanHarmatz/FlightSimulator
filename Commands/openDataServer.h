@@ -13,7 +13,7 @@
 #include "../SymbolTable.h"
 
 using namespace std;
-class openDataServer: command {
+class openDataServer: public command {
     bool keep_running = true;
     mutex mtx;
     SymbolTable* st;

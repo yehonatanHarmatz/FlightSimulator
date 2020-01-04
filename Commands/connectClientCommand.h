@@ -12,7 +12,7 @@
 #include "../ChangeValueListener.h"
 #include "../SymbolTable.h"
 
-class connectClientCommand : command, ChangeValueListener{
+class connectClientCommand : public command, ChangeValueListener{
     queue<string> messages;
     SymbolTable* st;
     bool keep_running = true;
