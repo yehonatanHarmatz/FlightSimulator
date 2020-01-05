@@ -17,6 +17,7 @@ class openDataServer: public command {
     bool keep_running = true;
     mutex mtx;
     SymbolTable* st;
+    string left = "";
 public:
     openDataServer(vector<string>* lexer, SymbolTable* st) : command(lexer) {
         this->st = st;
@@ -36,6 +37,7 @@ public:
 
     void serverLoop(int client_socket);
 
+    bool hasPacket(string basicString);
 };
 
 

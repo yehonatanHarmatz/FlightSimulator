@@ -9,7 +9,9 @@
 #include "../laxer.h"
 #include "../Expression/Interpreter.h"
 #include <thread>
-string left = "";
+#include <cstring>
+#include <iostream>
+
 void openDataServer::serverRound(int client_socket) {
     //size of 36 float values with ',' and \n for reading each values message separately
     const int size = 36* sizeof(float) + 37 * sizeof(char);
@@ -17,20 +19,30 @@ void openDataServer::serverRound(int client_socket) {
     list<string>* data;
     bool flag = true;
     string s = left;
+    left = "";
     while (flag) {
-        recv(client_socket, buffer, size, 0);
+        if (!hasPacket(s)) {
+            recv(client_socket, buffer, size, 0);
+        } else {
+            list<string>* l = split(s, "\n");
+            s = l->front();
+            left = l->back();
+            flag = false;
+            delete l;
+        }
         for (int i = 0; i < size; ++i) {
             if (buffer[i] != '\0' && buffer[i] != '\n' && buffer[i] != '\r' && flag) {
                 s += buffer[i];
-            } else if (buffer[i] != '\n') {
+            } else if (buffer[i] == '\n' && flag) {
                 flag = false;
-            } else if (!flag) {
+            } else if (!flag && buffer[i] != '\0' && buffer[i] != '\r') {
                 left += buffer[i];
             }
         }
+        memset(buffer,0,size);
     }
     data = split(s, ",");
-    for (int i =0; i < (*data).size(); ++i) {
+    for (int i =0; !data->empty(); ++i) {
         st->update(i, stod(data->front()));
         data->pop_front();
     }
@@ -73,4 +85,13 @@ int openDataServer::execute(int index) {
     int port = i1.interpret(getStringInVector(index))->calculate();
     openServer(port);
     return params;
+}
+
+bool openDataServer::hasPacket(string s) {
+    for (int i =0; i< s.length(); ++i) {
+        if (s[i] == '\n') {
+            return true;
+        }
+    }
+    return false;
 }

@@ -50,7 +50,7 @@ Variable &Variable::operator--(int num) {
 }
 ///return the value from the Symbol Table object
 double Variable::calculate() {
-    this->st->getValue(name);
+    this->value = this->st->getValue(name);
     return this->value;
 }
 

@@ -8,6 +8,10 @@
 #include "Commands/openDataServer.h"
 #include "Commands/ifCommand.h"
 #include "Commands/whileCommand.h"
+#include "Commands/DefineVarCommand.h"
+#include "Commands/PrintCommand.h"
+#include "Commands/SleepCommand.h"
+
 /**
  * run the program
  */
@@ -52,10 +56,17 @@ void Parser::initialize() {
     connectClientCommand* ccc = new connectClientCommand(lexer_strings, st);
     ifCommand* ic = new ifCommand(lexer_strings, st, this);
     whileCommand* wc = new whileCommand(lexer_strings, st, this);
+    DefineVarCommand* dvc = new DefineVarCommand(lexer_strings, st);
+    PrintCommand* pc = new PrintCommand(lexer_strings, st);
+    SleepCommand* sc = new SleepCommand(lexer_strings, st);
     this->commands = map<string, command*>();
     this->commands["openDataServer"] = os;
     this->commands["connectControlClient"] = ccc;
     this->commands["while"] = wc;
     this->commands["if"] = ic;
+    this->commands["var"] = dvc;
+    this->commands["Print"] = pc;
+    this->commands["Sleep"] = sc;
+
 
 }

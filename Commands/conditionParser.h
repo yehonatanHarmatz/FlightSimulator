@@ -25,6 +25,7 @@ public:
         this->params = 0;
     }
     void getCommands(int index) {
+        this->commands = list<command*>();
         int a = index - 1; //on while/if word
         left = getStringInVector(index);
         ++index;
@@ -66,7 +67,7 @@ public:
     }
     void runCommands(int index) {
         for (auto c : this->commands) {
-                c->execute(index);
+                c->execute(index + 1);
                 index += c->getParams(index + 1);
         }
     }
@@ -74,6 +75,7 @@ public:
         if (this->params == 0) {
             this->getCommands(i);
         }
+        return this->params;
     }
 };
 #endif //AIRPLANEPROJECT_CONDITIONPARSER_H

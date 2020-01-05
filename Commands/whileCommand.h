@@ -14,7 +14,9 @@ public:
         while (checkCondition()) {
             this->runCommands(index + 4);
         }
-        return this->params;
+        int a = this->params;
+        this->params = 0;
+        return a;
     }
 };
 #endif //AIRPLANEPROJECT_WHILECOMMAND_H
