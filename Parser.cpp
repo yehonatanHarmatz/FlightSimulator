@@ -11,6 +11,7 @@
 #include "Commands/DefineVarCommand.h"
 #include "Commands/PrintCommand.h"
 #include "Commands/SleepCommand.h"
+#include "Commands/functionCommand.h"
 
 /**
  * run the program
@@ -42,8 +43,11 @@ command *Parser::getCommand(int i) {
         this->commands.insert(pair<string, command*>(this->lexer_strings->at(i),
                 new updateVarCommand(this->lexer_strings, this->lexer_strings->at(i), this->st)));
         return this->commands.at(this->lexer_strings->at(i));
+    } else {
+        this->commands.insert(pair<string, command*>(this->lexer_strings->at(i),
+                                                     new functionCommand(this->lexer_strings, this->st, this)));
+        return this->commands.at(this->lexer_strings->at(i));
     }
-    return nullptr;
 }
 /***
  * initialize:

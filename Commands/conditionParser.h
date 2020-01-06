@@ -38,7 +38,7 @@ public:
             command * c = p->getCommand(index);
             if (c!= nullptr) {
                 this->commands.push_back(c);
-                index += c->getParams(index);
+                index += c->getParams(index + 1);
             }
         }
         //now the index on }
