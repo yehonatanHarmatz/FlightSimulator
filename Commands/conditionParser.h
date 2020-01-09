@@ -24,6 +24,11 @@ public:
         this->p = p;
         this->params = 0;
     }
+    /**
+     * The function extracts the commands from the lexer's vector
+     * and puts them into the commands list in the object.
+     * @param index the starting index of the codition.
+     */
     void getCommands(int index) {
         this->commands = list<command*>();
         int a = index - 1; //on while/if word
@@ -65,6 +70,10 @@ public:
             throw "illegal condition";
         }
     }
+    /**
+     * The function runs the commands of the conditional statement
+     * @param index the index in the lexer's vector.
+     */
     void runCommands(int index) {
         for (auto c : this->commands) {
                 c->execute(index + 1);
