@@ -22,12 +22,20 @@ public:
     SymbolTable() {
         initialize();
     }
+    /**
+     * getters
+     */
     float getValue(string var);
     string getSim(string var);
     string getVarByIndex(int index);
+    /**
+     * update by index or by name
+     */
     void update(string var, float newVal);
     void update(int index, float newVal);
-
+    /**
+     * add var
+     */
     void addProgramVar(string var, VarData* data) {
         this->ProgramVars.insert(pair<string,VarData*>(var, data));
     }
@@ -38,6 +46,9 @@ public:
     VarData* searchSim(string sim);
 
     void changeDirection(string var, bool newDirection);
+    /**
+     * check if s is var
+     */
     bool isVar(string s) {
         return (this->SimulatorVars.find(s) != this->SimulatorVars.end()) || (this->ProgramVars.find(s) != this->ProgramVars.end());
     }

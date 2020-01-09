@@ -10,13 +10,21 @@
 #include "connectClientCommand.h"
 #include "../Expression/Interpreter.h"
 
+/**
+ * the variable var get the value newVal
+ * @param var
+ * @param newVal
+ */
 void connectClientCommand::update(string var, float newVal) {
     string message = "set " + this->st->getSim(var) + " " + to_string(newVal) + "\r\n";
     mesMtx.lock();
     this->messages.push(message);
     mesMtx.unlock();
 }
-
+/**
+ * loop that send messages to the simulator
+ * @param client_socket
+ */
 void connectClientCommand::sendMessageLoop(int client_socket) {
     mtx.lock();
     while (keep_running) {
@@ -31,7 +39,11 @@ void connectClientCommand::sendMessageLoop(int client_socket) {
     }
     close(client_socket);
 }
-
+/**
+ * connect to the simulator
+ * @param index
+ * @return
+ */
 int connectClientCommand::execute(int index) {
     Interpreter i1 = Interpreter(st);
     const string ip = getStringInVector(index).substr(1, getStringInVector(index).length()-2);

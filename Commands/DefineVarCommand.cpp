@@ -2,7 +2,7 @@
 // Created by oren on 03/01/2020.
 //
 #include "command.h"
-#include "SymbolTable.h"
+#include "../SymbolTable.h"
 
 /**
  * the class is used to execute a command which defines a variable and adds it to the symbol table.

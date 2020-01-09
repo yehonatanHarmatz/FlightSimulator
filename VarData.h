@@ -22,12 +22,18 @@ public:
         this->sim = sim;
         this->direction = dir;
     }
+    /**
+     * setters
+     */
     void changeVal(float newVal) {
         this->Value = newVal;
     }
     void changeDirection(bool newDir) {
         this->direction = newDir;
     }
+    /**
+     * getters
+     */
     bool getDirection() {
         return direction;
     }

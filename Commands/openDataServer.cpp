@@ -11,7 +11,10 @@
 #include <thread>
 #include <cstring>
 #include <iostream>
-
+/**
+ * function for one round of getting information from the simulator
+ * @param client_socket
+ */
 void openDataServer::serverRound(int client_socket) {
     //size of 36 float values with ',' and \n for reading each values message separately
     const int size = 36* sizeof(float) + 37 * sizeof(char);
@@ -20,6 +23,9 @@ void openDataServer::serverRound(int client_socket) {
     bool flag = true;
     string s = left;
     left = "";
+    /**
+     * recive packets from the client till we arrived \n
+     */
     while (flag) {
         if (!hasPacket(s)) {
             recv(client_socket, buffer, size, 0);
@@ -48,6 +54,10 @@ void openDataServer::serverRound(int client_socket) {
     }
     free(data);
 }
+/**
+ * server loop - call the server round
+ * @param client_socket
+ */
 void openDataServer::serverLoop(int client_socket) {
     mtx.lock();
     while (keep_running) {
@@ -57,6 +67,10 @@ void openDataServer::serverLoop(int client_socket) {
     }
     close(client_socket);
 }
+/**
+ * open server
+ * @param port
+ */
 void openDataServer::openServer(int port) {
     int sockfd = socket(AF_INET,SOCK_STREAM, 0);
     if (sockfd == -1) {
@@ -80,13 +94,20 @@ void openDataServer::openServer(int port) {
     thread ServerLoop(&openDataServer::serverLoop, this ,client_socket);
     ServerLoop.detach();
 }
+/**
+ * execute the code
+ * @param index
+ * @return
+ */
 int openDataServer::execute(int index) {
     Interpreter i1 = Interpreter(st);
     int port = i1.interpret(getStringInVector(index))->calculate();
     openServer(port);
     return params;
 }
-
+/**
+ * search for \n in s
+ */
 bool openDataServer::hasPacket(string s) {
     for (int i =0; i< s.length(); ++i) {
         if (s[i] == '\n') {

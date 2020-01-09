@@ -1,5 +1,5 @@
 #include <iostream>
-#include "laxer.h"
+#include "lexer.h"
 #include "SymbolTable.h"
 #include "Expression/Interpreter.h"
 #include "Expression/Div.h"
@@ -9,7 +9,7 @@
 using namespace std;
 
 int main(int argc, char *argv[]) {
-    laxer l = laxer();
+    lexer l = lexer();
     vector<string> v = l.laxe(argv[1]);
     Parser p = Parser(&v);
     p.parse();

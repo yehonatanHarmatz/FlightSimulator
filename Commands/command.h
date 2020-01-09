@@ -5,7 +5,7 @@
 #ifndef AIRPLANEPROJECT_COMMAND_H
 #define AIRPLANEPROJECT_COMMAND_H
 
-#include "../laxer.h"
+#include "../lexer.h"
 using namespace std;
 
 /*

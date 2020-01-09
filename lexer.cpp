@@ -92,7 +92,7 @@ vector<string>* separateWhileCondition(string& line, string& s) {
  * @param file_name
  * @return the vector of strings
  */
-vector<string> laxer::laxe(const char *file_name) {
+vector<string> lexer::laxe(const char *file_name) {
     vector<string> str_array;
     ifstream f;
     ///open the file to read
@@ -250,7 +250,7 @@ list<string>* split(string str, string token) {
  * @param flag
  * @return
  */
-string laxer::getWord(string s, bool flag) {
+string lexer::getWord(string s, bool flag) {
     char c = s[0];
     int i = 0;
     string word = "";
