@@ -3,7 +3,7 @@
 
 ## Installation
 install all the cpp & header files
-run on a linux environment with g++ stardart c++14
+run on a linux environment with g++ standart c++14
 makefile should include the flag -pthread
 
 ## Usage
