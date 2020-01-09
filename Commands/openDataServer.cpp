@@ -6,7 +6,7 @@
 #include <netinet/in.h>
 #include <unistd.h>
 #include "openDataServer.h"
-#include "../laxer.h"
+#include "../lexer.h"
 #include "../Expression/Interpreter.h"
 #include <thread>
 #include <cstring>
