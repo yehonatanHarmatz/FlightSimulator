@@ -18,12 +18,22 @@ class functionCommand : public command {
     int normalyParam;
     int startIndex;
 public:
+    /**
+     * Constructor.
+     * @param lexer_params - the output vector of the lexer.
+     * @param st - a pointer the the symbol table.
+     * @param p - a pointer to the parser.
+     */
     functionCommand(vector<string>* lexer_params, SymbolTable* st, Parser* p): command(lexer_params) {
         this->st = st;
         this->p = p;
         this->params = 0;
         this->normalyParam = 2;
     }
+    /**
+     * The function extracts the commands from the lexer's vector.
+     * @param index - the starting index of the function in the lexer's vector.
+     */
     void getCommands(int index) {
         this->commands = list<command*>();
         int a = index - 1; //on function name
@@ -40,6 +50,10 @@ public:
         //now the index on }
         this->params = index - a + 1;
     };
+    /**
+     * executes the function.
+     * @param index - the starting index of the function in the lexer's vector.
+     */
     int execute(int index) {
         Interpreter i1 = Interpreter(st);
      if (this->isDefinition) {
