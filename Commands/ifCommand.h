@@ -9,7 +9,18 @@
 
 class ifCommand : public conditionParser {
 public:
+    /**
+     * Constructor.
+     * @param lexer_params - the output vector of the lexer.
+     * @param st1 - a pointer the the symbol table.
+     * @param p1 - a pointer to the parser.
+     */
     ifCommand(vector<string> *lexerParams, SymbolTable *st1, Parser *p1) : conditionParser(lexerParams, st1, p1) {}
+    /**
+     * The function executes the if.
+     * @param index - the index of the if in the lexer's vector.
+     * @return the number of params.
+     */
     int execute(int index) {
         this->getCommands(index);
         if (checkCondition()) {
