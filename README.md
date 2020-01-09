@@ -12,7 +12,7 @@ run the program with the flight simulator
 and check if it iterprets the code correctly given by fly.txt
 
 ## Credits
-Yehonatan Harmatz
+Yehonatan Harmatz,
 Oren Schwartz
 
 ## License
