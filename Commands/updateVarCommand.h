@@ -13,6 +13,12 @@ class updateVarCommand : public command {
     string name;
     SymbolTable* st;
 public:
+    /**
+     * Constructor.
+     * @param ptr - the output vector of the lexer.
+     * @param st - a pointer the the symbol table.
+     * @param name - the name of the variable.
+     */
     updateVarCommand(vector<string> *ptr, string name, SymbolTable *st) : command(ptr) {
         this->name = name;
         this->st = st;
