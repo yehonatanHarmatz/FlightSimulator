@@ -2,8 +2,8 @@
 // Created by yehonatan on 13/12/2019.
 //
 
-#ifndef AIRPLANEPROJECT_LAXER_H
-#define AIRPLANEPROJECT_LAXER_H
+#ifndef AIRPLANEPROJECT_LEXER_H
+#define AIRPLANEPROJECT_LEXER_H
 
 #include <string>
 #include <vector>
@@ -12,7 +12,7 @@ using namespace std;
 /**
  * the lexer class
  */
-class laxer {
+class lexer {
 public:
     vector<string> laxe(const char *file_name);
     string getWord(string s, bool flag);
@@ -20,4 +20,4 @@ public:
 };
 list<string>* split(string str, string token);
 
-#endif //AIRPLANEPROJECT_LAXER_H
+#endif //AIRPLANEPROJECT_LEXER_H
