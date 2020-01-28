@@ -37,11 +37,13 @@ void MySerialServer::loop(int port, ClientHandler* c) {
                 throw "cant accept the client";
             }
             c->handleClient(client_socket);
+            close(client_socket);
         } catch (...) {
             this->stop();
         }
         stopMtx.lock();
     }
+    close(sockfd)
 }
 
 void MySerialServer::open(int port, ClientHandler* c) {

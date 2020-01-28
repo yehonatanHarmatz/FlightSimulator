@@ -1,5 +1,5 @@
-#ifndef MILESTONE_2_SEARCHABLE_TABLE_H
-#define MILESTONE_2_SEARCHABLE_TABLE_H
+#ifndef EX4_SEARCHABLE_TABLE_H
+#define EX4_SEARCHABLE_TABLE_H
 
 #include <vector>
 #include <string>
