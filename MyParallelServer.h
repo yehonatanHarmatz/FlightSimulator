@@ -12,7 +12,9 @@
 
 class MyParallelServer : public server_side::Server {
     mutex stopMtx;
+    mutex clientsMtx;
     bool shouldStop;
+    int num_of_clients = 0;
 public:
     void loop(int port, ClientHandler* c);
     virtual void open(int port, ClientHandler* c);

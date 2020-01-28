@@ -20,7 +20,7 @@ void MyParallelServer::loop(int port, ClientHandler* c) {
     if (bind(sockfd, (struct sockaddr *) &address, sizeof(address)) == -1) {
         throw "cant bind";
     }
-    if (listen(sockfd, 5) == -1) {
+    if (listen(sockfd, 10) == -1) {
         throw "Error during listening";
     }
     struct timeval tv;
@@ -41,7 +41,14 @@ void MyParallelServer::loop(int port, ClientHandler* c) {
         }
         stopMtx.lock();
     }
-    close(sockfd)
+    stopMtx.unlock();
+    clientsMtx.lock();
+    while (!num_of_clients) {
+        clientsMtx.unlock();
+        clientsMtx.lock();
+    }
+    clientsMtx.unlock();
+    close(sockfd);
 }
 
 void MyParallelServer::open(int port, ClientHandler* c) {
@@ -55,6 +62,12 @@ void MyParallelServer::stop() {
 }
 
 void MyParallelServer::handleClient(int client_socket, ClientHandler *c) {
+    clientsMtx.lock();
+    num_of_clients++;
+    clientsMtx.unlock();
     c->handleClient(client_socket);
     close(client_socket);
+    clientsMtx.lock();
+    num_of_clients--;
+    clientsMtx.unlock();
 }
