@@ -8,6 +8,7 @@
 * interface of client handler
 */
 #include "list"
+#include "string"
 using namespace std;
 class ClientHandler {
 public:
@@ -19,14 +20,8 @@ public:
  * @param token
  * @return
  */
-list<string>* split(string str, string token) {
-    list<string> *list = new std::list<string>();
-    size_t pos = 0;
-    while ((pos = str.find(token)) != std::string::npos) {
-        list->push_back(str.substr(0, pos));
-        str.erase(0, pos + token.length());
-    }
-    list->push_back(str);
-    return list;
-}
+list<string>* split(string str, string token);
+
+
+
 #endif //EX4_CLIENTHANDLER_H
