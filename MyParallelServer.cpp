@@ -1,15 +1,14 @@
 //
-// Created by yehonatan on 20/01/2020.
+// Created by yehonatan on 28/01/2020.
 //
 
-
+#include "MyParallelServer.h"
 #include <unistd.h>
 #include <thread>
 #include <cstring>
 #include <iostream>
-#include "MySerialServer.h"
 using namespace std;
-void MySerialServer::loop(int port, ClientHandler* c) {
+void MyParallelServer::loop(int port, ClientHandler* c) {
     int sockfd = socket(AF_INET,SOCK_STREAM, 0);
     if (sockfd == -1) {
         throw "cant create a socket";
@@ -35,8 +34,8 @@ void MySerialServer::loop(int port, ClientHandler* c) {
             if (client_socket == -1) {
                 throw "cant accept the client";
             }
-            c->handleClient(client_socket);
-            close(client_socket);
+            thread loop(&MyParallelServer::handleClient, this, client_socket, c);
+            loop.detach();
         } catch (...) {
             this->stop();
         }
@@ -45,12 +44,17 @@ void MySerialServer::loop(int port, ClientHandler* c) {
     close(sockfd)
 }
 
-void MySerialServer::open(int port, ClientHandler* c) {
-    thread loop(&MySerialServer::loop, this, port, c);
+void MyParallelServer::open(int port, ClientHandler* c) {
+    thread loop(&MyParallelServer::loop, this, port, c);
     loop.join();
 }
-void MySerialServer::stop() {
+void MyParallelServer::stop() {
     stopMtx.lock();
     this->shouldStop = true;
     stopMtx.unlock();
+}
+
+void MyParallelServer::handleClient(int client_socket, ClientHandler *c) {
+    c->handleClient(client_socket);
+    close(client_socket);
 }
