@@ -42,7 +42,7 @@ void MySerialServer::loop(int port, ClientHandler* c) {
         }
         stopMtx.lock();
     }
-    close(sockfd)
+    close(sockfd);
 }
 
 void MySerialServer::open(int port, ClientHandler* c) {
