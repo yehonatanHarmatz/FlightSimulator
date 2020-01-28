@@ -41,7 +41,7 @@ void MyParallelServer::loop(int port, ClientHandler* c) {
         }
         stopMtx.lock();
     }
-    close(sockfd)
+    close(sockfd);
 }
 
 void MyParallelServer::open(int port, ClientHandler* c) {
