@@ -7,7 +7,7 @@
 #include <string>
 #include "Solver.h"
 #include "Searcher.h"
-#include "searchable_table.h"
+#include "SearchableTable.h"
 
 using namespace std;
 
@@ -21,6 +21,7 @@ public:
         vector<State<pInt>*> vec = searcher->search(&problem);
         return castPathToString(vec);
     }
+
     string& castPathToString(vector<State<pInt>*> vec) {
         string s = "";
         for (int i = 0; i < vec.size() - 1; ++i) {

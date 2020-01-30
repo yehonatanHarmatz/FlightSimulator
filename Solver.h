@@ -4,15 +4,11 @@
 
 #ifndef EX4_SOLVER_H
 #define EX4_SOLVER_H
-
-#include "Cloneable.h"
 /**
  * interface of slover
  */
-template<typename Problem, typename Solution> class Solver : public Cloneable{
+template<typename Problem, typename Solution> class Solver {
 public:
     virtual Solution& solve(const Problem& p) = 0;
-    virtual Solver* clone() = 0;
-
 };
 #endif //EX4_SOLVER_H
