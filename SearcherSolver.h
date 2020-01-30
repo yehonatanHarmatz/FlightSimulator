@@ -47,6 +47,9 @@ public:
         s = s.substr(0, s.length() - 2);
         return s;
     }
+    virtual SearcherSolver* clone() {
+        return new SearcherSolver(searcher->clone());
+    }
 
 };
 

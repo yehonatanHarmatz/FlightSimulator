@@ -10,6 +10,7 @@
 #include "ClientHandler.h"
 #include "Solver.h"
 #include "CacheManager.h"
+#include "Cloneable.h"
 
 class MyTestClientHandler: public ClientHandler {
     Solver<string, string>* solver;
@@ -22,6 +23,8 @@ public:
     virtual void handleClient(int& client_socket);
 
     bool hasPacket(string s);
+    virtual MyTestClientHandler* clone();
+
 };
 
 

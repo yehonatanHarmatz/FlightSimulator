@@ -71,3 +71,6 @@ bool MyTestClientHandler::hasPacket(string s) {
     }
     return false;
 }
+MyTestClientHandler* MyTestClientHandler::clone() {
+    return this;
+}

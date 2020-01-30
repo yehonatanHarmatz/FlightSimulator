@@ -14,6 +14,10 @@ class StringReverser : public Solver<string, string> {
 
 public:
     virtual string& solve(const string& p);
+    virtual Solver* clone() {
+        return this;
+    }
+
 };
 
 

@@ -104,3 +104,7 @@ bool MyClientHandler::hasPacket(string s) {
     }
     return false;
 }
+
+ClientHandler *MyClientHandler::clone() {
+    return new MyClientHandler(solver->clone(),cm);
+}

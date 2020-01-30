@@ -6,7 +6,7 @@
 #define EX4_CACHEMANAGER_H
 
 using namespace std;
-template <typename K, typename T> class CacheManager {
+template <typename K, typename T> class CacheManager{
 
 public:
     virtual void insert(K key, T object) = 0;

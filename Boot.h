@@ -16,12 +16,12 @@
 namespace boot {
     class Main {
     public:
-        int main() {
+        int main(int i) {
             server_side::Server* server = new MySerialServer();
             Solver<string, string>* solver = new StringReverser();
             CacheManager<string, string>* cm = new FileCacheManager2(5);
             ClientHandler* ch = new MyTestClientHandler(solver, cm);
-            server->open(5656, ch);
+            server->open(i, ch);
             return 0;
         }
     };

@@ -65,7 +65,7 @@ void MyParallelServer::handleClient(int client_socket, ClientHandler *c) {
     clientsMtx.lock();
     num_of_clients++;
     clientsMtx.unlock();
-    c->handleClient(client_socket);
+    c->clone()->handleClient(client_socket);
     close(client_socket);
     clientsMtx.lock();
     num_of_clients--;

@@ -9,10 +9,12 @@
 */
 #include "list"
 #include "string"
+#include "Cloneable.h"
 using namespace std;
-class ClientHandler {
+class ClientHandler : public Cloneable {
 public:
     virtual void handleClient(int& client_socket) = 0;
+    virtual ClientHandler* clone() = 0;
 };
 /**
  * split function

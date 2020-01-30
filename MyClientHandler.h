@@ -21,6 +21,8 @@ public:
     virtual void handleClient(int& client_socket);
 
     bool hasPacket(string s);
+
+    virtual ClientHandler* clone();
 };
 
 
