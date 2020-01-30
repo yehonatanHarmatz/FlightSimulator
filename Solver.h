@@ -4,8 +4,9 @@
 
 #ifndef EX4_SOLVER_H
 #define EX4_SOLVER_H
+
 /**
- * interface of slover
+ * interface of solver
  */
 template<typename Problem, typename Solution> class Solver {
 public:
