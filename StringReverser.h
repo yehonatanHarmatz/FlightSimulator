@@ -17,6 +17,9 @@ public:
     virtual Solver* clone() {
         return this;
     }
+    string to_string() {
+        return "STRING_REVERSER";
+    }
 
 };
 

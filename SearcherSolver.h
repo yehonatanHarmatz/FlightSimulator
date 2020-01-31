@@ -30,16 +30,16 @@ public:
             int c = x + 2*y;
             switch (c) {
                 case -1:
-                    s += "Right, ";
+                    s += "Down (" + ::to_string((int)vec.at(i+1)->getCost()) + ") , ";
                     break;
                 case -2:
-                    s += "Down, ";
+                    s += "Right (" + ::to_string((int)vec.at(i+1)->getCost()) + ") , ";
                     break;
                 case 1:
-                    s += "Left, ";
+                    s += "Up (" + ::to_string((int)vec.at(i+1)->getCost()) + ") , ";
                     break;
                 case 2:
-                    s += "Up, ";
+                    s += "Left (" + ::to_string((int)vec.at(i+1)->getCost()) + ") , ";
                     break;
                 default:
                     throw "error";
@@ -51,7 +51,9 @@ public:
     SearcherSolver* clone() override {
         return new SearcherSolver(searcher->clone());
     }
-
+    string to_string() {
+        return searcher->to_string();
+    }
 };
 
 #endif //EX4_SEARCHERSOLVER_H

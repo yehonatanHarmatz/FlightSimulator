@@ -15,6 +15,6 @@ public:
     ///get searchable object and return the path of the solution
     virtual vector<State<T>*> search(const Searchable<T>* searchable) = 0;
     virtual Searcher* clone() = 0;
-
+    virtual string to_string() = 0;
 };
 #endif //EX4_SEARCHER_H

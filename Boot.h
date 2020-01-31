@@ -17,11 +17,12 @@
 #include "SearchableTable.h"
 #include "SearcherSolver.h"
 #include "DFS.h"
+#include "BFS.h"
 namespace boot {
     class Main {
     public:
         int main(int i) {
-            Solver<SearchableTable, string>* solver = new SearcherSolver(new DFS<pInt>());
+            Solver<SearchableTable, string>* solver = new SearcherSolver(new BFS<pInt>());
             server_side::Server* server = new MyParallelServer();
             //Solver<string, string>* solver = new StringReverser();
             CacheManager<string, string>* cm = new FileCacheManager2(5);

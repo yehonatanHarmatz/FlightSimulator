@@ -1,10 +1,9 @@
 //
-// Created by oren on 30/01/2020.
+// Created by yehonatan on 31/01/2020.
 //
 
-#ifndef EX4_DFS_H
-#define EX4_DFS_H
-
+#ifndef EX4_BFS_H
+#define EX4_BFS_H
 #include "Searcher.h"
 #include "list"
 #include <algorithm>
@@ -15,21 +14,21 @@ template <class T>
  * returns the shortest path from initial state to goal state.
  * list of nullptr if such path does not exist.
  */
-class DFS : public Searcher<T> {
+class BFS : public Searcher<T> {
 public:
     virtual vector<State<T>*> search(const Searchable<T>* searchable) {
-        list<State<T>*> stack_list; // our stack (DFS algorithm uses stack)
+        list<State<T>*> queue_list; // our stack (BFS algorithm uses queue)
         list<State<T>*> black_list; // the close list (black nodes)
         State<T>* curr;
 
         // insert the initial state
         State<T>* init_state = new State<T>(searchable->getInitialState());
-        stack_list.push_back(init_state); // send by address
+        queue_list.push_front(init_state); // send by address
 
-        while (!stack_list.empty()) {
+        while (!queue_list.empty()) {
             // get the element from the top of the stack
-            curr = stack_list.back();
-            stack_list.pop_back();
+            curr = queue_list.front();
+            queue_list.pop_front();
             black_list.push_back(curr);
 
             // if we reached the goal
@@ -50,9 +49,9 @@ public:
                 auto f = [=](const State<T>* node2)->bool { return *node2 == *node_ptr; };
                 // only iterate on nodes that are neighbors and the ones who are not in the black list (or just entered)
                 if ((std::find_if(black_list.begin(),black_list.end(), f) == black_list.end()) &&
-                        (std::find_if(stack_list.begin(), stack_list.end(), f) == stack_list.end())) {
+                    (std::find_if(queue_list.begin(), queue_list.end(), f) == queue_list.end())) {
                     node.setParent(curr);
-                    stack_list.push_back(new State<T>(node)); // returns a pointer to the state
+                    queue_list.push_back(new State<T>(node)); // returns a pointer to the state
                 }
             }
         }
@@ -61,13 +60,12 @@ public:
         temp->push_back(nullptr);
         return *temp;
     }
-    DFS<T>* clone() {
-        return new DFS<T>();
+    BFS<T>* clone() {
+        return new BFS<T>();
     }
     string to_string() {
-        return "DFS";
+        return "BFS";
     }
 };
 
-
-#endif //EX4_DFS_H
+#endif //EX4_BFS_H

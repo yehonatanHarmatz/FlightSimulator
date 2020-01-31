@@ -84,15 +84,15 @@ void MyClientHandler::handleClient(int &client_socket) {
         /// s = end so we solve and return the solution
         else {
             SearchableTable problem = SearchableTable(table, start, end);
-            if (cm->isExist(to_string(problem.hash()))) {
-                string message = cm->get(s);
+            if (cm->isExist(solver->to_string() + to_string(problem.hash()))) {
+                string message = cm->get(solver->to_string() + to_string(problem.hash()));
                 message += '\n';
                 send(client_socket, message.c_str(), message.length(), 0);
             } else {
                 string message = solver->solve(problem);
                 message += '\n';
                 send(client_socket, message.c_str(), message.length(), 0);
-                cm->insert(to_string(problem.hash()), message);
+                cm->insert(solver->to_string() + to_string(problem.hash()), message.substr(0, message.length()-1));
             }
         }
     }
