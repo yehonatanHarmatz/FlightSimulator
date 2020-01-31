@@ -6,6 +6,7 @@
 #define EX4_BESTFIRSTSEARCH_H
 
 #include "HeuristicSearcher.h"
+#include "ManhattanDistance.h"
 #include <queue>
 #include <list>
 #include <algorithm>
@@ -13,18 +14,18 @@
 template <class T>
 class BestFirstSearch : public HeuristicSearcher<T> {
 public:
-    BestFirstSearch(HeuristicFunction<T>& h) : HeuristicSearcher<T>(h) {}
+    BestFirstSearch(HeuristicFunction<T>* h) : HeuristicSearcher<T>(h) {}
 
     virtual vector<State<T>*> search(const Searchable<T>* searchable) {
         // get the heuristic function.
-        HeuristicFunction<T>& func = this->getHeuristicFunction();
+        HeuristicFunction<T>* func = this->getHeuristicFunction();
 
         // set the goal to the goal of the given searchable.
-        func.setGoal(searchable.getGoalState());
+        func->setGoal(searchable->getGoalState());
 
         // comparator
-        auto comparator = [&func](const State<T>*& node1, const State<T>*& node2) {
-            return func(*node1) > func(*node2);
+        auto comparator = [&func](State<T>*& node1, State<T>*& node2) {
+            return (*func)(*node1) > (*func)(*node2);
         };
 
         // create the priority queue
@@ -36,7 +37,7 @@ public:
         int counter = 0;
 
         // insert the initial state
-        State<T>* init_state = new State<T>(searchable.getInitialState());
+        State<T>* init_state = new State<T>(searchable->getInitialState());
         pq.push(init_state);
 
         // loop until the priority queue is empty
@@ -48,14 +49,14 @@ public:
 
             // goal state
             if (*curr == searchable->getGoalState()) {
-                vector<State<T>*> res = new vector<State<T>*>();
+                vector<State<T>*>* res = new vector<State<T>*>();
 
                 // insert the whole path
                 while (curr != nullptr) {
-                    res.push_back(curr);
+                    res->insert(res->begin(), curr);
                     curr = curr->getParent();
                 }
-                return res;
+                return *res;
             }
 
             for (State<T>& node : searchable->getAllPossibleStates(*curr)) {
@@ -65,7 +66,7 @@ public:
                 auto f = [=](const State<T>* node2)->bool { return *node2 == *node_ptr; };
                 if (std::find_if(black_list.begin(), black_list.end(), f) == black_list.end()) {
                     // this is the node whose currents parent.
-                    node.setParent(*curr);
+                    node.setParent(curr);
                     pq.push(new State<T>(node));
                 }
             }
@@ -73,7 +74,13 @@ public:
         // path does not exist
         vector<State<T>*>* temp = new vector<State<T>*>();
         temp->push_back(nullptr);
-        return temp;
+        return *temp;
+    }
+    BestFirstSearch<T>* clone() {
+        return new BestFirstSearch<T>(this->getHeuristicFunction());
+    }
+    string to_string() {
+        return "BestFS";
     }
 };
 #endif //EX4_BESTFIRSTSEARCH_H
