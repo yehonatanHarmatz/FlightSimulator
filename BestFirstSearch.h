@@ -5,27 +5,19 @@
 #ifndef EX4_BESTFIRSTSEARCH_H
 #define EX4_BESTFIRSTSEARCH_H
 
-#include "HeuristicSearcher.h"
-#include "ManhattanDistance.h"
+#include "Searcher.h"
 #include <queue>
 #include <list>
 #include <algorithm>
 
 template <class T>
-class BestFirstSearch : public HeuristicSearcher<T> {
+class BestFirstSearch : public Searcher<pInt> {
 public:
-    BestFirstSearch(HeuristicFunction<T>* h) : HeuristicSearcher<T>(h) {}
-
     virtual vector<State<T>*> search(const Searchable<T>* searchable) {
-        // get the heuristic function.
-        HeuristicFunction<T>* func = this->getHeuristicFunction();
-
-        // set the goal to the goal of the given searchable.
-        func->setGoal(searchable->getGoalState());
 
         // comparator
-        auto comparator = [&func](State<T>*& node1, State<T>*& node2) {
-            return (*func)(*node1) > (*func)(*node2);
+        auto comparator = [](State<T>*& node1, State<T>*& node2) {
+            return (node2)->getCost() < (node1)->getCost();
         };
 
         // create the priority queue
@@ -33,17 +25,19 @@ public:
 
         // black list
         list<State<T>*> black_list;
+        list<State<T>*> open_list; ///temp
         State<T>* curr;
         int counter = 0;
 
         // insert the initial state
         State<T>* init_state = new State<T>(searchable->getInitialState());
         pq.push(init_state);
-
+        open_list.push_front(init_state);
         // loop until the priority queue is empty
         while (!pq.empty()) {
             curr = pq.top();
             pq.pop();
+            open_list.remove(curr);
             black_list.push_back(curr);
             ++counter;
 
@@ -65,9 +59,31 @@ public:
                 // inspired by @Yehonatan Harmatz
                 auto f = [=](const State<T>* node2)->bool { return *node2 == *node_ptr; };
                 if (std::find_if(black_list.begin(), black_list.end(), f) == black_list.end()) {
+                    if ((std::find_if(open_list.begin(), open_list.end(), f) == open_list.end())) {//if (!pq.isContain(node_ptr) {
                     // this is the node whose currents parent.
                     node.setParent(curr);
                     pq.push(new State<T>(node));
+                    open_list.push_front(new State<T>(node));
+                    } else if (node_ptr->getLocalCost() + curr->getCost() < node_ptr->getCost()) {
+                        list<State<pInt> *> temp;
+                        while (!pq.empty()) {
+                            temp.push_back(pq.top());
+                            pq.pop();
+                        }
+                        temp.remove(node_ptr);
+                        node.setParent(curr);
+                        node.setCost(node_ptr->getLocalCost() + curr->getCost());
+                        temp.push_back(node_ptr);
+                        while (!temp.empty()) {
+                            pq.push(temp.front());
+                            temp.pop_front();
+                        }
+                    }
+                    //} else if (node_pte->getLocalCost() + curr->getCost() < node_pte->getCost()) {
+                    //pq.updateKey(node_ptr, node_pte->getLocalCost() + curr->getCost())
+                    //node.setParent(curr);
+                    //node.setCost(node_pte->getLocalCost() + curr->getCost());
+                    //}
                 }
             }
         }
@@ -77,7 +93,7 @@ public:
         return *temp;
     }
     BestFirstSearch<T>* clone() {
-        return new BestFirstSearch<T>(this->getHeuristicFunction());
+        return new BestFirstSearch<T>();
     }
     string to_string() {
         return "BestFS";

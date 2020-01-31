@@ -12,7 +12,7 @@ class ManhattanDistance : public HeuristicFunction<pInt> {
 public:
     ManhattanDistance() : HeuristicFunction() {}
 
-    double operator()(const State<pInt>& curr) const {
+    double operator()(const State<pInt>& curr) const override {
         return abs(curr.getValue().first - goal.getValue().first) + abs(curr.getValue().second - goal.getValue().second);
     }
 };

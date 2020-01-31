@@ -44,6 +44,7 @@ void MyClientHandler::handleClient(int &client_socket) {
                 l->pop_front();
                 while (!l->empty()) {
                     left += l->front();
+                    left += "\n";
                     l->pop_front();
                 }
                 flag = false;

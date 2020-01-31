@@ -32,6 +32,13 @@ public:
     void setParent (State<T>* parent) { this->cameFrom = parent; }
     void setCost (double cost) { this->cost = cost; }
     double getCost () const { return this->cost; }
+    double getLocalCost () const {
+        if (this->getParent() == nullptr) {
+            return this->getCost();
+        } else {
+            return this->getCost() - this->getParent()->getCost();
+        }
+    }
     State<T>* getParent () const { return this->cameFrom; }
     T getValue () const { return this->state; }
 };

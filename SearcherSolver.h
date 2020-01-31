@@ -45,7 +45,7 @@ public:
                     throw "error";
             }
         }
-        s = s.substr(0, s.length() - 2);
+        s = s.substr(0, s.length() - 3);
         return *(new string(s));
     }
     SearcherSolver* clone() override {
