@@ -7,20 +7,25 @@
 #include <iostream>
 #include "server_side.h"
 #include "MySerialServer.h"
+#include "MyParallelServer.h"
 #include "Solver.h"
 #include "StringReverser.h"
 #include "CacheManager.h"
 #include "FileCacheManager2.h"
-#include "MyTestClientHandler.h"
-
+#include "MyClientHandler.h"
+#include "Searcher.h"
+#include "SearchableTable.h"
+#include "SearcherSolver.h"
+#include "DFS.h"
 namespace boot {
     class Main {
     public:
         int main(int i) {
-            server_side::Server* server = new MySerialServer();
-            Solver<string, string>* solver = new StringReverser();
+            Solver<SearchableTable, string>* solver = new SearcherSolver(new DFS<pInt>());
+            server_side::Server* server = new MyParallelServer();
+            //Solver<string, string>* solver = new StringReverser();
             CacheManager<string, string>* cm = new FileCacheManager2(5);
-            ClientHandler* ch = new MyTestClientHandler(solver, cm);
+            ClientHandler* ch = new MyClientHandler(solver, cm);
             server->open(i, ch);
             return 0;
         }

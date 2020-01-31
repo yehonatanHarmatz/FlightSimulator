@@ -6,8 +6,10 @@
 #define EX4_DFS_H
 
 #include "Searcher.h"
-#include <list>
+#include "list"
+#include <algorithm>
 
+using namespace std;
 template <class T>
 /*
  * returns the shortest path from initial state to goal state.
@@ -21,24 +23,24 @@ public:
         State<T>* curr;
 
         // insert the initial state
-        State<T> init_state = new State<T>(searchable->getInitialState());
-        stack_list.push_back(&init_state); // send by address
+        State<T>* init_state = new State<T>(searchable->getInitialState());
+        stack_list.push_back(init_state); // send by address
 
         while (!stack_list.empty()) {
             // get the element from the top of the stack
             curr = stack_list.back();
             stack_list.pop_back();
-            black_list.insert(curr);
+            black_list.push_back(curr);
 
             // if we reached the goal
             if (*curr == searchable->getGoalState()) {
-                vector<State<T> *> res = new vector<State<T> *>();
+                vector<State<T>*>* res = new vector<State<T> *>();
                 // insert all the path
                 while (curr != nullptr) {
-                    res.insert(curr);
+                    res->insert(res->begin(),curr);
                     curr = curr->getParent();
                 }
-                return res;
+                return *res;
             }
 
             list<State<T>> expand_list = searchable->getAllPossibleStates(*curr);
@@ -47,15 +49,20 @@ public:
                 State<T>* node_ptr = &node;
 
                 // only iterate on nodes that are neighbors and the ones who are not in the black list (or just entered)
-                if (black_list.find(node_ptr) == black_list.end() &&
-                stack_list.find(stack_list.begin(), stack_list.end(), node_ptr) ) {
-                    node.setParent(*curr);
+                if ((std::find_if(black_list.begin(),black_list.end(), [&](State<T>* node)->bool { return *node_ptr == *node; }) == black_list.end()) &&
+                        (std::find(stack_list.begin(), stack_list.end(), [&](State<T>* node)->bool { return *node_ptr == *node; }) == stack_list.end())) {
+                    node.setParent(curr);
                     stack_list.push_back(new State<T>(node)); // returns a pointer to the state
                 }
             }
         }
         // the path doesn't exist
-        return new vector<State<T>*>(nullptr);
+        vector<State<T>*>* temp = new vector<State<T>*>();
+        temp->push_back(nullptr);
+        return *temp;
+    }
+    DFS<T>* clone() {
+        return new DFS<T>();
     }
 };
 

@@ -1,7 +1,3 @@
-//
-// Created by oren on 30/01/2020.
-//
-
 #ifndef EX4_SEARCHABLETABLE_H
 #define EX4_SEARCHABLETABLE_H
 
@@ -37,9 +33,9 @@ public:
 
         stringstream ss;
         ss << table.size() << ',' << table[0].size()
-            << '|' << startPoint.first << ',' << startPoint.second
-            << '|' << endPoint.first << ',' << endPoint.second
-            << '|';
+           << '|' << startPoint.first << ',' << startPoint.second
+           << '|' << endPoint.first << ',' << endPoint.second
+           << '|';
 
         for (int i = 0; i < table.size(); ++i) {
             for (int j = 0; j < table[0].size(); ++j) {
@@ -50,17 +46,17 @@ public:
         this->detail = ss.str();
     }
 
-    virtual State<pInt> getInitialState() {
+    virtual State<pInt> getInitialState() const {
         return start;
     }
 
-    virtual State<pInt> getGoalState() {
+    virtual State<pInt> getGoalState() const {
         return end;
     }
 
-    virtual list<State<pInt>> getAllPossibleStates(const State<pInt>& s);
+    virtual list<State<pInt>> getAllPossibleStates(const State<pInt>& s) const;
 
-    virtual bool operator==(const Searchable<pInt>& toCompare) {
+    virtual bool operator==(const Searchable<pInt>& toCompare) const {
         const SearchableTable* st = dynamic_cast<const SearchableTable*>(&toCompare);
         if (st == nullptr) {
             return false;
@@ -69,14 +65,15 @@ public:
         return this->detail == st->detail;
     };
 
-    size_t hash() {
+    size_t hash() const {
         ::hash<string> hasher;
         return hasher(detail);
     }
 
-    virtual string toString() {
+    virtual string toString() const {
         return detail;
     }
 };
 
-#endif //EX4_SEARCHABLETABLE_H
+
+#endif

@@ -1,10 +1,6 @@
-//
-// Created by oren on 30/01/2020.
-//
-
 #include "SearchableTable.h"
 
-list<State<pInt>> SearchableTable::getAllPossibleStates(const State<pInt>& s) {
+list<State<pInt>> SearchableTable::getAllPossibleStates(const State<pInt>& s) const{
     bool UP, DOWN, LEFT, RIGHT;
 
 

@@ -9,11 +9,11 @@
 #include <list>
 #include <sys/socket.h>
 #include "MyTestClientHandler.h"
-#include "searchable_table.h"
+#include "SearchableTable.h"
 #include <cstring>
 #include <unistd.h>
 #include <vector>
-
+#include <iostream>
 using namespace std;
 
 void MyClientHandler::handleClient(int &client_socket) {
@@ -41,7 +41,11 @@ void MyClientHandler::handleClient(int &client_socket) {
             } else {
                 list<string> *l = split(s, "\n");
                 s = l->front();
-                left = l->back();
+                l->pop_front();
+                while (!l->empty()) {
+                    left += l->front();
+                    l->pop_front();
+                }
                 flag = false;
                 delete l;
             }
@@ -62,13 +66,16 @@ void MyClientHandler::handleClient(int &client_socket) {
                 sizeOfMatrix = temp->size();
             }
             if (line < sizeOfMatrix) {
+                table.push_back(vector<int>());
                 for (int i = 0; i < sizeOfMatrix; ++i) {
-                    table.at(line).at(i) = atoi(temp->front().c_str());
+                    table.at(line).push_back(atoi(temp->front().c_str()));
                     temp->pop_front();
                 }
+                ++line;
             }
             else if (line == sizeOfMatrix) {
                 start = pInt(atoi(temp->front().c_str()), atoi(temp->back().c_str()));
+                ++line;
             } else {
                 end = pInt(atoi(temp->front().c_str()), atoi(temp->back().c_str()));
             }
@@ -106,5 +113,6 @@ bool MyClientHandler::hasPacket(string s) {
 }
 
 ClientHandler *MyClientHandler::clone() {
+    std::cout << "hi";
     return new MyClientHandler(solver->clone(),cm);
 }

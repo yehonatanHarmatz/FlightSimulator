@@ -32,18 +32,23 @@ void MyParallelServer::loop(int port, ClientHandler* c) {
         try {
             int client_socket = accept(sockfd, (struct sockaddr *) &address, (socklen_t *) &address);
             if (client_socket == -1) {
+                cout << "cant accept the client";
                 throw "cant accept the client";
             }
-            thread loop(&MyParallelServer::handleClient, this, client_socket, c);
-            loop.detach();
-        } catch (...) {
+            thread handle(&MyParallelServer::handleClient, this, client_socket, c);
+            handle.detach();
+        } catch(const char* e) {
+            cout << e;
             this->stop();
-        }
+        } /*catch (...) {
+            cout << "errrrrrrrrroooooooooorrrrrrrrrrrrr";
+            this->stop();
+        }*/
         stopMtx.lock();
     }
     stopMtx.unlock();
     clientsMtx.lock();
-    while (!num_of_clients) {
+    while (num_of_clients) {
         clientsMtx.unlock();
         clientsMtx.lock();
     }
@@ -52,8 +57,8 @@ void MyParallelServer::loop(int port, ClientHandler* c) {
 }
 
 void MyParallelServer::open(int port, ClientHandler* c) {
-    thread loop(&MyParallelServer::loop, this, port, c);
-    loop.join();
+    thread tloop(&MyParallelServer::loop, this, port, c);
+    tloop.join();
 }
 void MyParallelServer::stop() {
     stopMtx.lock();
@@ -65,7 +70,7 @@ void MyParallelServer::handleClient(int client_socket, ClientHandler *c) {
     clientsMtx.lock();
     num_of_clients++;
     clientsMtx.unlock();
-    c->clone()->handleClient(client_socket);
+    (c->clone())->handleClient(client_socket);
     close(client_socket);
     clientsMtx.lock();
     num_of_clients--;

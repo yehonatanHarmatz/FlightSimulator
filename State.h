@@ -1,9 +1,7 @@
-//
-// Created by oren on 30/01/2020.
-//
+  
+#ifndef MILESTONE_2_STATE_H
+#define MILESTONE_2_STATE_H
 
-#ifndef EX4_STATE_H
-#define EX4_STATE_H
 
 /**
  * a state represents a situation
@@ -38,4 +36,5 @@ public:
     T getValue () const { return this->state; }
 };
 
-#endif //EX4_STATE_H
+
+#endif

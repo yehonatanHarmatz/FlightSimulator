@@ -8,7 +8,7 @@
 #include "ClientHandler.h"
 #include "Solver.h"
 #include "CacheManager.h"
-#include "searchable_table.h"
+#include "SearchableTable.h"
 
 class MyClientHandler: public ClientHandler {
     Solver<SearchableTable, string>* solver;

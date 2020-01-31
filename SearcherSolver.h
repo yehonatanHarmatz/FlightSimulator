@@ -46,9 +46,9 @@ public:
             }
         }
         s = s.substr(0, s.length() - 2);
-        return s;
+        return *(new string(s));
     }
-    virtual SearcherSolver* clone() {
+    SearcherSolver* clone() override {
         return new SearcherSolver(searcher->clone());
     }
 
