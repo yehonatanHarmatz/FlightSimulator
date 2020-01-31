@@ -11,12 +11,12 @@ template <class T>
 
 class HeuristicSearcher : public Searcher<T> {
 private:
-    const HeuristicFunction<T>& func;
+    const HeuristicFunction<T>& h;
 public:
-    HeuristicSearcher(const HeuristicFunction<T>& h) : func(h) {}
+    HeuristicSearcher(const HeuristicFunction<T>& func) : h(func) {}
     virtual vector<State<T>*> search(const Searchable<T>* searchable) = 0;
-    HeuristicFunction<T>& getHeuristicFUnction() {
-        return this->func;
+    HeuristicFunction<T>& getHeuristicFunction() {
+        return this->h;
     }
 };
 

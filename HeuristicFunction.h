@@ -13,7 +13,9 @@ class HeuristicFunction {
 protected:
     State<T> goal;
 public:
-    double operator()(State<T> current, State<T> goal) = 0;
+    HeuristicFunction() {}
+
+    double operator()(const State<T>& current) = 0;
     virtual void setGoal(const State<T>& g) {
         this->goal = g;
     }
