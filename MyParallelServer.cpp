@@ -32,7 +32,6 @@ void MyParallelServer::loop(int port, ClientHandler* c) {
         try {
             int client_socket = accept(sockfd, (struct sockaddr *) &address, (socklen_t *) &address);
             if (client_socket == -1) {
-                cout << "cant accept the client";
                 throw "cant accept the client";
             }
             thread handle(&MyParallelServer::handleClient, this, client_socket, c);
@@ -40,10 +39,9 @@ void MyParallelServer::loop(int port, ClientHandler* c) {
         } catch(const char* e) {
             cout << e;
             this->stop();
-        } /*catch (...) {
-            cout << "errrrrrrrrroooooooooorrrrrrrrrrrrr";
-            this->stop();
-        }*/
+        } catch (...) {
+            throw "error";
+        }
         stopMtx.lock();
     }
     stopMtx.unlock();

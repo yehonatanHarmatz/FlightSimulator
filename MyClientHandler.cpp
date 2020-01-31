@@ -113,6 +113,5 @@ bool MyClientHandler::hasPacket(string s) {
 }
 
 ClientHandler *MyClientHandler::clone() {
-    std::cout << "hi";
     return new MyClientHandler(solver->clone(),cm);
 }
