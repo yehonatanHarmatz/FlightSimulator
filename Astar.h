@@ -25,7 +25,7 @@ public:
 
         // comparator (heuristic)
         auto comparator = [](State<T>*& node1, State<T>*& node2) {
-            return (node2)->getCost() + func(*node1) < (node1)->getCost() + func(*node2);
+            return (node2)->getCost() + func(*node2) < (node1)->getCost() + func(*node1);
         };
 
         // create the priority queue
