@@ -17,15 +17,15 @@ template <class T>
 class Astar : public HeuristicSearcher<T> {
 public:
     // constructor
-    explicit Astar(HeuristicFunction<T>& h) : HeuristicSearcher<T>(h) {}
+    explicit Astar(HeuristicFunction<T>* h) : HeuristicSearcher<T>(h) {}
 
     virtual vector<State<T>*> search(const Searchable<T>* searchable) {
         // the heuristic function
-        auto& func = this->getHeuristicFunction();
+        HeuristicFunction<T>* func = this->getHeuristicFunction();
 
         // comparator (heuristic)
-        auto comparator = [](State<T>*& node1, State<T>*& node2) {
-            return (node2)->getCost() + func(*node2) < (node1)->getCost() + func(*node1);
+        auto comparator = [func](State<T>*& node1, State<T>*& node2) {
+            return (node2)->getCost() + (*func)(*node2) < (node1)->getCost() + (*func)(*node1);
         };
 
         // create the priority queue
