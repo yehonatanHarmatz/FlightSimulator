@@ -61,8 +61,8 @@ string FileCacheManager2::get(string key) {
         }
         string obj((std::istreambuf_iterator<char>(f)),
                    std::istreambuf_iterator<char>());
-        insert(key, obj);
         mtx.unlock();
+        insert(key, obj);
         return obj;
     }
 }
